@@ -1,29 +1,66 @@
 using System;
+using CollisionSystem;
 using PlayerSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace InputSystem
 {
     public class InputListener : MonoBehaviour
     {
-        private PlayerController _playerController;
-        public void Construct(PlayerController playerController)
+        private Player _player;
+        private PlayerInvoker _playerInvoker;
+        private PlayerInput _playerInput;
+        private float _moveInput;
+        private CollisionDetector _collisionDetector;
+        public void Construct(Player player, PlayerInvoker playerInvoker,
+            PlayerInput playerInput, CollisionDetector collisionDetector)
         {
-            _playerController = playerController;
+            _player = player;
+            _playerInvoker = playerInvoker;
+            _playerInput = playerInput;
+            _collisionDetector = collisionDetector;
+            _playerInput.Main.Jump.performed += context => ReadJump();
+        }
+
+        private void OnEnable()
+        {
+            
+            _playerInput.Enable();
+            _collisionDetector.GroundCollisionEnter += () => _playerInput.Main.Move.Disable();
+            _collisionDetector.GroundCollisionExit += () => _playerInput.Main.Move.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _playerInput.Disable();
         }
 
         private void Update()
         {
-            ReadJump();
+            
+            ReadMove();
+           
         }
 
+     
         private void ReadJump()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
+            
                 Debug.Log("Jump");
-                _playerController.Jump();
-            }
+                _playerInvoker.Jump();
+            
         }
+
+       
+
+        private void ReadMove()
+        {
+            _moveInput = _playerInput.Main.Move.ReadValue<float>();
+            _playerInvoker.Move(_moveInput);
+            _playerInvoker.Rotate(_moveInput);
+        }
+
+       
     }
 }
