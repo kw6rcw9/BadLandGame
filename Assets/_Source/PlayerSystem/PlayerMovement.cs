@@ -1,5 +1,6 @@
 using System.Numerics;
 using DG.Tweening;
+using TMPro.EditorUtilities;
 using Unity.Mathematics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
@@ -37,6 +38,14 @@ namespace PlayerSystem
                 rb.MoveRotation(rotation);
             }
                 
+        }
+
+        public void FirstPush(Rigidbody2D rb, float speed, Vector2 distance)
+        {
+            rb.DOMove(distance, speed);
+
+
+
         }
     }
 }

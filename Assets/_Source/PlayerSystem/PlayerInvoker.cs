@@ -25,6 +25,10 @@ namespace PlayerSystem
         {
             _playerMovement.Rotate(_player.Rb, _player.RotationSpeed, _player.transform,new Vector2(axisInput, 0) );
         }
-        
+
+        public void FirstPush()
+        {
+            _playerMovement.FirstPush(_player.Rb, _player.FirstPushSpeed, _player.FirstPushDistance);
+        }
     }
 }

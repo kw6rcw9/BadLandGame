@@ -11,8 +11,12 @@ namespace PlayerSystem
 
         [field: SerializeField] public float JumpForce { get; private set; }
         [field: SerializeField] public float RotationSpeed { get; private set; }
+        [field: SerializeField] public float FirstPushSpeed { get;  private set; }
+        [field: SerializeField] public Vector2 FirstPushDistance { get;  private set; }
         
         [field: SerializeField] public Rigidbody2D Rb { get; private set; }
+        
+        
         
        
     }

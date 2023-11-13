@@ -20,15 +20,21 @@ namespace InputSystem
             _playerInvoker = playerInvoker;
             _playerInput = playerInput;
             _collisionDetector = collisionDetector;
+            Debug.Log(_playerInput);
+        }
+
+        private void Start()
+        {
+            Debug.Log("OnEnable: " + _playerInput);
+            _playerInput.Enable();
             _playerInput.Main.Jump.performed += context => ReadJump();
+            _collisionDetector.GroundCollisionEnter += () => _playerInput.Main.Move.Disable();
+            _collisionDetector.GroundCollisionExit += () => _playerInput.Main.Move.Enable();
+            
         }
 
         private void OnEnable()
         {
-            
-            _playerInput.Enable();
-            _collisionDetector.GroundCollisionEnter += () => _playerInput.Main.Move.Disable();
-            _collisionDetector.GroundCollisionExit += () => _playerInput.Main.Move.Enable();
         }
 
         private void OnDisable()
