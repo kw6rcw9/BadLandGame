@@ -15,6 +15,7 @@ namespace Core
         [SerializeField] private CollisionDetector collisionDetector;
          [SerializeField] private PlayerDeath playerDeath;
         [SerializeField] private PlayerFirstPush playerFirstPush;
+        [SerializeField] private TriggerObs triggerObs;
         private PlayerInvoker _playerInvoker;
         private PlayerMovement _playerMovement;
         private PlayerInput _playerInput;
@@ -28,6 +29,8 @@ namespace Core
             inputListener.Construct(player, _playerInvoker, _playerInput, collisionDetector);
             playerFirstPush.Construct(_playerInvoker, _game);
             playerDeath.Construct(_game, collisionDetector);
+            triggerObs.Construct(collisionDetector);
+            
             
         }
     }
